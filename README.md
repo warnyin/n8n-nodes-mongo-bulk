@@ -11,8 +11,8 @@ This is an n8n community node for MongoDB bulk and many operations. It provides 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
 [![CI](https://github.com/thebossza101/n8n-nodes-mongo-bulk/actions/workflows/ci.yml/badge.svg)](https://github.com/thebossza101/n8n-nodes-mongo-bulk/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/n8n-nodes-mongo-bulk.svg)](https://www.npmjs.com/package/n8n-nodes-mongo-bulk)
-[![npm downloads](https://img.shields.io/npm/dt/n8n-nodes-mongo-bulk.svg)](https://www.npmjs.com/package/n8n-nodes-mongo-bulk)
+[![npm version](https://img.shields.io/npm/v/n8n-nodes-mongo-bulk.svg?v=2)](https://www.npmjs.com/package/n8n-nodes-mongo-bulk)
+[![npm downloads](https://img.shields.io/npm/dt/n8n-nodes-mongo-bulk.svg?v=2)](https://www.npmjs.com/package/n8n-nodes-mongo-bulk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Installation
