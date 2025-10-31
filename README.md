@@ -1,5 +1,9 @@
 # n8n-nodes-mongo-bulk
 
+<p align="center">
+  <img src="./n8n-nodes-mongo-bulk.png" alt="MongoDB Bulk Node Icon" width="128" height="128">
+</p>
+
 ![MongoDB Bulk Banner](./assets/banner.svg)
 
 This is an n8n community node for MongoDB bulk and many operations. It provides efficient ways to perform bulk operations on MongoDB collections.
