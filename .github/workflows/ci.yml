@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 21.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Build
+        run: npm run build
+
+      - name: Check build output
+        run: |
+          echo "Checking dist directory..."
+          ls -la dist/
+          echo "Checking for required files..."
+          test -f dist/nodes/MongoDbBulk/MongoDbBulk.node.js
+          test -f dist/nodes/MongoDbBulk/mongodb.svg
+          test -f dist/credentials/MongoDbCredentials.credentials.js
+          echo "All required files present!"
+
+  package-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Pack package
+        run: npm pack
+
+      - name: Check package contents
+        run: |
+          tar -tzf n8n-nodes-mongo-bulk-*.tgz | grep -E "(dist/nodes/|dist/credentials/|assets/|README.md)" || exit 1
+          echo "Package structure looks good!"
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: package
+          path: '*.tgz'
+          retention-days: 7
