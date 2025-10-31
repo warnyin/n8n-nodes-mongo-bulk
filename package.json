@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thebossza101/n8n-nodes-mongo-bulk.git"
+    "url": "git+https://github.com/warnyin/n8n-nodes-mongo-bulk.git"
   },
   "bugs": {
-    "url": "https://github.com/thebossza101/n8n-nodes-mongo-bulk/issues"
+    "url": "https://github.com/warnyin/n8n-nodes-mongo-bulk/issues"
   },
-  "homepage": "https://github.com/thebossza101/n8n-nodes-mongo-bulk#readme",
+  "homepage": "https://github.com/warnyin/n8n-nodes-mongo-bulk#readme",
   "keywords": [
     "n8n-community-node-package",
     "n8n",

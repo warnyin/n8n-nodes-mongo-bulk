@@ -3,7 +3,7 @@ name: Create Release
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 
 permissions:
   contents: write
@@ -21,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         run: npm ci
@@ -47,7 +47,7 @@ jobs:
 
           # If release notes are empty, use a default message
           if [ ! -s release_notes.md ]; then
-            echo "See [CHANGELOG.md](https://github.com/thebossza101/n8n-nodes-mongo-bulk/blob/main/CHANGELOG.md) for details." > release_notes.md
+            echo "See [CHANGELOG.md](https://github.com/warnyin/n8n-nodes-mongo-bulk/blob/main/CHANGELOG.md) for details." > release_notes.md
           fi
 
       - name: Create GitHub Release
