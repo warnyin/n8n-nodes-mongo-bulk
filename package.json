@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-mongo-bulk",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "n8n node for MongoDB bulk and many operations",
   "license": "MIT",
   "author": {
