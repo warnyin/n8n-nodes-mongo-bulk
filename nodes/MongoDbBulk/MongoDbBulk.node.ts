@@ -8,6 +8,60 @@ import {
 
 import { MongoClient, ObjectId } from "mongodb";
 
+/**
+ * Helper function to convert date fields in documents
+ * @param documents - Array of documents or single document
+ * @param dateFields - Array of field names to convert to Date objects
+ * @returns Processed documents with Date objects
+ */
+function convertDateFields(documents: any, dateFields: string[]): any {
+  if (!dateFields || dateFields.length === 0) {
+    return documents;
+  }
+
+  const processDocument = (doc: any): any => {
+    const processedDoc = { ...doc };
+
+    for (const field of dateFields) {
+      // Support nested fields using dot notation
+      const fieldParts = field.split(".");
+      let current = processedDoc;
+
+      // Navigate to the parent of the target field
+      for (let i = 0; i < fieldParts.length - 1; i++) {
+        if (current[fieldParts[i]] === undefined) {
+          break;
+        }
+        current = current[fieldParts[i]];
+      }
+
+      const lastPart = fieldParts[fieldParts.length - 1];
+
+      if (current[lastPart] !== undefined && current[lastPart] !== null) {
+        const value = current[lastPart];
+
+        // Convert to Date if it's a string or number
+        if (typeof value === "string" || typeof value === "number") {
+          const date = new Date(value);
+          // Check if the date is valid
+          if (!Number.isNaN(date.getTime())) {
+            current[lastPart] = date;
+          }
+        }
+      }
+    }
+
+    return processedDoc;
+  };
+
+  // Handle both single document and array of documents
+  if (Array.isArray(documents)) {
+    return documents.map(processDocument);
+  } else {
+    return processDocument(documents);
+  }
+}
+
 export class MongoDbBulk implements INodeType {
   description: INodeTypeDescription = {
     displayName: "MongoDB Bulk",
@@ -89,6 +143,20 @@ export class MongoDbBulk implements INodeType {
         default: "[]",
         description: "Array of documents to insert",
         placeholder: '[{"name": "John"}, {"name": "Jane"}]',
+      },
+      {
+        displayName: "Date Fields",
+        name: "dateFields",
+        type: "string",
+        displayOptions: {
+          show: {
+            operation: ["insertMany"],
+          },
+        },
+        default: "",
+        description:
+          "Comma-separated list of field names that should be converted to Date objects (e.g., timestamp,createdAt,updatedAt)",
+        placeholder: "timestamp,createdAt,updatedAt",
       },
       {
         displayName: "Options",
@@ -239,6 +307,20 @@ export class MongoDbBulk implements INodeType {
           '[{"insertOne": {"document": {"name": "John"}}}, {"updateOne": {"filter": {"_id": "123"}, "update": {"$set": {"status": "active"}}}}]',
       },
       {
+        displayName: "Date Fields",
+        name: "dateFields",
+        type: "string",
+        displayOptions: {
+          show: {
+            operation: ["bulkWrite"],
+          },
+        },
+        default: "",
+        description:
+          "Comma-separated list of field names that should be converted to Date objects for insert/update operations (e.g., timestamp,createdAt,updatedAt)",
+        placeholder: "timestamp,createdAt,updatedAt",
+      },
+      {
         displayName: "Options",
         name: "options",
         type: "collection",
@@ -333,7 +415,29 @@ export class MongoDbBulk implements INodeType {
                   : documentsJson;
               const options = this.getNodeParameter("options", i, {}) as any;
 
-              result = await mongoCollection.insertMany(documents, options);
+              // Get date fields parameter
+              const dateFieldsParam = this.getNodeParameter(
+                "dateFields",
+                i,
+                ""
+              ) as string;
+              const dateFields = dateFieldsParam
+                ? dateFieldsParam
+                    .split(",")
+                    .map((f) => f.trim())
+                    .filter((f) => f.length > 0)
+                : [];
+
+              // Convert date fields if specified
+              const processedDocuments = convertDateFields(
+                documents,
+                dateFields
+              );
+
+              result = await mongoCollection.insertMany(
+                processedDocuments,
+                options
+              );
               break;
             }
 
@@ -447,7 +551,20 @@ export class MongoDbBulk implements INodeType {
                   : operationsJson;
               const options = this.getNodeParameter("options", i, {}) as any;
 
-              // Process operations to convert _id strings to ObjectId
+              // Get date fields parameter
+              const dateFieldsParam = this.getNodeParameter(
+                "dateFields",
+                i,
+                ""
+              ) as string;
+              const dateFields = dateFieldsParam
+                ? dateFieldsParam
+                    .split(",")
+                    .map((f) => f.trim())
+                    .filter((f) => f.length > 0)
+                : [];
+
+              // Process operations to convert _id strings to ObjectId and date fields
               const processedOperations = operations.map((op: any) => {
                 const operation = { ...op };
 
@@ -460,6 +577,39 @@ export class MongoDbBulk implements INodeType {
                     operation.insertOne.document._id
                   );
                 }
+
+                // Convert date fields for insertOne
+                if (operation.insertOne?.document) {
+                  operation.insertOne.document = convertDateFields(
+                    operation.insertOne.document,
+                    dateFields
+                  );
+                }
+
+                // Convert date fields for replaceOne
+                if (operation.replaceOne?.replacement) {
+                  operation.replaceOne.replacement = convertDateFields(
+                    operation.replaceOne.replacement,
+                    dateFields
+                  );
+                }
+
+                // Convert date fields in updateOne $set operations
+                if (operation.updateOne?.update?.$set) {
+                  operation.updateOne.update.$set = convertDateFields(
+                    operation.updateOne.update.$set,
+                    dateFields
+                  );
+                }
+
+                // Convert date fields in updateMany $set operations
+                if (operation.updateMany?.update?.$set) {
+                  operation.updateMany.update.$set = convertDateFields(
+                    operation.updateMany.update.$set,
+                    dateFields
+                  );
+                }
+
                 if (
                   operation.updateOne?.filter?._id &&
                   typeof operation.updateOne.filter._id === "string"

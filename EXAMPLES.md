@@ -2,7 +2,73 @@
 
 This document provides practical examples for using the MongoDB Bulk node in n8n workflows.
 
-## Example 1: Batch User Import
+## Example 1: Insert Documents with Date Fields
+
+When inserting documents with datetime fields, you need to specify which fields should be converted to MongoDB Date objects. Without this, date strings will be stored as plain strings.
+
+```json
+{
+  "operation": "insertMany",
+  "collection": "products",
+  "documents": [
+    {
+      "product_id": "P21091536196937",
+      "timestamp": "2025-10-31T02:44:40.780Z",
+      "name": "Product A"
+    },
+    {
+      "product_id": "P21091536229833",
+      "timestamp": "2025-10-31T02:44:40.780Z",
+      "name": "Product B"
+    }
+  ],
+  "dateFields": "timestamp"
+}
+```
+
+**With multiple date fields:**
+
+```json
+{
+  "operation": "insertMany",
+  "collection": "users",
+  "documents": [
+    {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "createdAt": "2025-10-31T00:00:00.000Z",
+      "lastLoginAt": "2025-10-31T10:30:00.000Z",
+      "subscriptionExpiry": "2026-10-31T00:00:00.000Z"
+    }
+  ],
+  "dateFields": "createdAt,lastLoginAt,subscriptionExpiry"
+}
+```
+
+**With nested date fields (using dot notation):**
+
+```json
+{
+  "operation": "insertMany",
+  "collection": "orders",
+  "documents": [
+    {
+      "orderId": "ORD-001",
+      "customer": {
+        "name": "Jane Smith",
+        "registeredAt": "2025-01-15T08:00:00.000Z"
+      },
+      "createdAt": "2025-10-31T02:44:40.780Z",
+      "shipping": {
+        "estimatedDelivery": "2025-11-05T00:00:00.000Z"
+      }
+    }
+  ],
+  "dateFields": "createdAt,customer.registeredAt,shipping.estimatedDelivery"
+}
+```
+
+## Example 2: Batch User Import
 
 Import multiple users at once:
 
@@ -84,7 +150,8 @@ Perform multiple operations in one request:
         "document": {
           "name": "New Product",
           "price": 29.99,
-          "stock": 100
+          "stock": 100,
+          "createdAt": "2025-10-31T02:44:40.780Z"
         }
       }
     },
@@ -96,6 +163,9 @@ Perform multiple operations in one request:
         "update": {
           "$mul": {
             "price": 0.9
+          },
+          "$set": {
+            "updatedAt": "2025-10-31T02:44:40.780Z"
           }
         }
       }
@@ -116,14 +186,23 @@ Perform multiple operations in one request:
         "update": {
           "$inc": {
             "stock": 50
+          },
+          "$set": {
+            "lastRestocked": "2025-10-31T02:44:40.780Z"
           }
         },
         "upsert": true
       }
     }
-  ]
+  ],
+  "dateFields": "createdAt,updatedAt,lastRestocked"
 }
 ```
+
+**Note:** When using the `dateFields` parameter with `bulkWrite`, it will automatically convert the specified fields to Date objects in:
+- `insertOne` document
+- `replaceOne` replacement document  
+- `updateOne` and `updateMany` `$set` operations
 
 ## Example 5: Find with Pagination
 

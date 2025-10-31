@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.8] - 2025-10-31
+
+### Added
+- ✨ **Date Fields Conversion**: New feature to automatically convert date string fields to MongoDB Date objects
+  - Added `dateFields` parameter to `insertMany` operation
+  - Added `dateFields` parameter to `bulkWrite` operation
+  - Support for simple field names: `timestamp,createdAt,updatedAt`
+  - Support for nested fields with dot notation: `customer.registeredAt,order.shippedAt`
+  - Automatic validation of date values before conversion
+  - Works with ISO 8601 strings, date-only strings, and Unix timestamps
+
+### Documentation
+- 📚 **DATE-FIELDS-GUIDE.md**: Comprehensive guide for date field conversion feature
+- 📖 **QUICK-DATE-SOLUTION.md**: Quick start guide with step-by-step instructions
+- 📝 **Updated EXAMPLES.md**: Added examples demonstrating date field conversion
+  - Example with single date field
+  - Example with multiple date fields
+  - Example with nested date fields
+  - Updated bulkWrite examples to show date conversion
+
+### Fixed
+- 🐛 **Date Type Issue**: Resolved issue where datetime values were stored as strings instead of Date objects
+  - Date range queries now work correctly
+  - Date-based sorting now functions properly
+  - Date arithmetic operations are now supported
+
 ## [1.0.7] - 2025-10-31
 
 ### Changed
