@@ -55,7 +55,7 @@ jobs:
         with:
           body_path: release_notes.md
           files: |
-            n8n-nodes-mongo-bulk-*.tgz
+            warnyin-n8n-nodes-mongo-bulk-*.tgz
           draft: false
           prerelease: false
         env:
