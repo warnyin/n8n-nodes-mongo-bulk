@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(dir:*)",
+      "Task",
+      "Bash",
+      "Bash(git log:*)",
+      "Glob",
+      "Grep",
+      "LS",
+      "Read",
+      "Edit",
+      "MultiEdit",
+      "Write",
+      "WebFetch",
+      "WebSearch",
+      "Bash(set PYTHONIOENCODING=utf-8:*)",
+      "Bash(npm install:*)",
+      "Bash(npm audit fix:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm link)",
+      "Bash(where:*)",
+      "Bash(npm whoami:*)",
+      "Bash(npm publish)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,28 @@
+# Source files
+nodes/
+credentials/
+*.ts
+!*.d.ts
+
+# Config files
+tsconfig.json
+.eslintrc.js
+
+# Development files
+*.log
+.DS_Store
+.vscode/
+.idea/
+
+# Documentation (optional - remove lines below if you want to include them)
+EXAMPLES.md
+SETUP.md
+LOCAL-INSTALL.md
+
+# Git
+.git/
+.gitignore
+
+# Node
+node_modules/
+npm-debug.log*

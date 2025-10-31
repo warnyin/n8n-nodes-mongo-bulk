@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="800" height="200">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10aa50;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#13aa52;stop-opacity:0.2" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="200" fill="url(#grad1)"/>
+
+  <!-- MongoDB leaf icon -->
+  <g transform="translate(50, 50) scale(1.5)">
+    <path fill="#10aa50" d="M15.9.087l.854 1.604c.192.296.4.558.645.802a22.406 22.406 0 013.745 7.137c1.034 3.41 1.537 6.946 1.537 10.484 0 3.538-.503 7.074-1.537 10.484a22.406 22.406 0 01-3.745 7.137 10.28 10.28 0 01-.645.802l-.854 1.604-.854-1.604a10.28 10.28 0 01-.645-.802 22.406 22.406 0 01-3.745-7.137c-1.034-3.41-1.537-6.946-1.537-10.484 0-3.538.503-7.074 1.537-10.484a22.406 22.406 0 013.745-7.137c.245-.244.453-.506.645-.802L15.9.087z"/>
+    <path fill="#b8c4c2" d="M15.9 0l.854 1.604c.192.296.4.558.645.802a22.406 22.406 0 013.745 7.137c1.034 3.41 1.537 6.946 1.537 10.484 0 3.538-.503 7.074-1.537 10.484a22.406 22.406 0 01-3.745 7.137 10.28 10.28 0 01-.645.802L15.9 40l-.854-1.604a10.28 10.28 0 01-.645-.802 22.406 22.406 0 01-3.745-7.137c-1.034-3.41-1.537-6.946-1.537-10.484 0-3.538.503-7.074 1.537-10.484a22.406 22.406 0 013.745-7.137c.245-.244.453-.506.645-.802L15.9 0z" opacity=".25"/>
+    <path fill="#12924f" d="M15.9 28.785v10.3l-.854-1.604a10.28 10.28 0 01-.645-.802 22.406 22.406 0 01-3.745-7.137c-1.034-3.41-1.537-6.946-1.537-10.484 0-3.538.503-7.074 1.537-10.484a22.406 22.406 0 013.745-7.137c.245-.244.453-.506.645-.802L15.9.087v10.3"/>
+  </g>
+
+  <!-- Title text -->
+  <text x="150" y="85" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#333">
+    MongoDB Bulk
+  </text>
+
+  <!-- Subtitle -->
+  <text x="150" y="120" font-family="Arial, sans-serif" font-size="24" fill="#666">
+    Bulk Operations for n8n
+  </text>
+
+  <!-- Features -->
+  <g transform="translate(150, 140)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="14" fill="#10aa50">
+      ⚡ Fast Bulk Operations
+    </text>
+    <text x="170" y="0" font-family="Arial, sans-serif" font-size="14" fill="#10aa50">
+      📦 Insert/Update/Delete Many
+    </text>
+    <text x="390" y="0" font-family="Arial, sans-serif" font-size="14" fill="#10aa50">
+      🔄 Mixed Bulk Write
+    </text>
+  </g>
+
+  <!-- Decorative elements - stacked layers -->
+  <g transform="translate(700, 60)">
+    <rect x="0" y="0" width="40" height="8" rx="4" fill="#10aa50" opacity="0.3"/>
+    <rect x="0" y="12" width="40" height="8" rx="4" fill="#10aa50" opacity="0.5"/>
+    <rect x="0" y="24" width="40" height="8" rx="4" fill="#10aa50" opacity="0.7"/>
+    <rect x="0" y="36" width="40" height="8" rx="4" fill="#10aa50"/>
+  </g>
+</svg>
