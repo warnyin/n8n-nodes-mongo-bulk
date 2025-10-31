@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.6] - 2025-10-31
+
+### Added
+- 🚀 **GitHub Actions CI/CD**: Automated workflows for testing, building, and publishing
+  - CI workflow: Test on Node.js 18, 20, and 21
+  - npm publish workflow: Automated publishing with provenance
+  - Release workflow: Automated GitHub releases
+- 📚 **Documentation**: GITHUB-ACTIONS-SETUP.md with complete workflow setup guide
+- 🤝 **Contributing**: CONTRIBUTING.md with contribution guidelines
+- 💰 **Funding**: GitHub funding configuration
+
+### Changed
+- Updated README with CI workflow badge
+- Improved package metadata with repository links
+
+### Infrastructure
+- Automated npm publishing with Trusted Publisher support
+- Supply chain security with npm provenance
+- Multi-version Node.js testing
+
 ## [1.0.5] - 2025-10-31
 
 ### Fixed
