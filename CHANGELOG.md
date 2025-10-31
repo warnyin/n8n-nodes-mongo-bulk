@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.7] - 2025-10-31
+
+### Changed
+- 📊 **Badge Updates**: Optimized npm badges in README
+  - Updated npm badges to use modern format (removed `.svg` extension, added `logo=npm` parameter)
+  - Changed download metric to show total downloads (`dt`) for better package statistics
+  - Improved badge caching behavior with shields.io
+
+### Fixed
+- 🔧 **GitHub Actions CI**: Fixed npm ci error by adding package-lock.json to repository
+  - Removed `package-lock.json` from `.gitignore`
+  - Generated and committed package-lock.json for reproducible builds
+  - CI workflows now run successfully with npm ci
+
+### Added
+- 🎨 **Visual Identity Updates**:
+  - Updated banner.svg with simplified MongoDB leaf icon matching node design
+  - PNG icon (1024x1024) properly configured in node and README
+  - Centered node icon display in README (128x128px)
+- 🔒 **Security**: Added SECURITY.md with security policy
+
 ## [1.0.6] - 2025-10-31
 
 ### Added
