@@ -10,9 +10,9 @@ This is an n8n community node for MongoDB bulk and many operations. It provides 
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
-[![CI](https://github.com/thebossza101/n8n-nodes-mongo-bulk/actions/workflows/ci.yml/badge.svg)](https://github.com/thebossza101/n8n-nodes-mongo-bulk/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/n8n-nodes-mongo-bulk?logo=npm)](https://www.npmjs.com/package/n8n-nodes-mongo-bulk)
-[![npm downloads](https://img.shields.io/npm/dt/n8n-nodes-mongo-bulk?logo=npm)](https://www.npmjs.com/package/n8n-nodes-mongo-bulk)
+[![CI](https://github.com/warnyin/n8n-nodes-mongo-bulk/actions/workflows/ci.yml/badge.svg)](https://github.com/warnyin/n8n-nodes-mongo-bulk/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/@warnyin/n8n-nodes-mongo-bulk?logo=npm)](https://www.npmjs.com/package/@warnyin/n8n-nodes-mongo-bulk)
+[![npm downloads](https://img.shields.io/npm/dt/@warnyin/n8n-nodes-mongo-bulk?logo=npm)](https://www.npmjs.com/package/@warnyin/n8n-nodes-mongo-bulk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Installation
@@ -23,7 +23,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 1. Go to **Settings > Community Nodes**.
 2. Select **Install**.
-3. Enter `n8n-nodes-mongo-bulk` in **Enter npm package name**.
+3. Enter `@warnyin/n8n-nodes-mongo-bulk` in **Enter npm package name**.
 4. Agree to the [risks](https://docs.n8n.io/integrations/community-nodes/risks/) of using community nodes and select **Install**.
 
 After installing the node, you can use it like any other node. n8n displays the node in search results in the **Nodes** panel.
@@ -33,7 +33,7 @@ After installing the node, you can use it like any other node. n8n displays the 
 To install manually:
 
 ```bash
-npm install n8n-nodes-mongo-bulk
+npm install @warnyin/n8n-nodes-mongo-bulk
 ```
 
 ## Operations
