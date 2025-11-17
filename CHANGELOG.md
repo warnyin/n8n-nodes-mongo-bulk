@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.13] - 2025-11-17
+
+### Fixed
+- 🐛 **Package Bundling**: Bundled mongodb and bson dependencies to fix n8n installation issues
+  - Changed to exact versions without semver ranges
+  - Added bundledDependencies to ensure proper dependency resolution in n8n
+
 ## [1.0.12] - 2025-11-17
 
 ### Fixed
