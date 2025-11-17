@@ -197,6 +197,9 @@ Configure connection details separately:
 - **User**: Username for authentication
 - **Password**: Password for authentication
 - **Use TLS**: Enable TLS/SSL connection
+- **MongoDB Server Version**: Select compatibility mode
+  - **4.2 or Higher**: For MongoDB 4.2+ (default)
+  - **4.0 or Lower**: For MongoDB 3.6, 4.0, and older versions
 
 #### Advanced TLS Options
 When TLS is enabled:
@@ -224,8 +227,21 @@ When TLS is enabled:
 ## Compatibility
 
 - Requires n8n version 0.187.0 or higher
-- Compatible with MongoDB 4.0 and higher
+- Compatible with MongoDB 3.6 and higher
+  - **MongoDB 4.2+**: Default mode, full feature support
+  - **MongoDB 4.0 and older**: Legacy mode available (select "4.0 or Lower" in credentials)
 - Supports MongoDB Atlas cloud databases
+
+### MongoDB Version Support
+
+If you encounter the error:
+```
+Server reports maximum wire version 7, but this version requires at least 8
+```
+
+Simply configure your credentials with:
+1. Set **MongoDB Server Version** to **"4.0 or Lower"**
+2. This enables compatibility mode for MongoDB 3.6, 4.0, and similar versions
 
 ## Resources
 

@@ -372,6 +372,14 @@ export class MongoDbBulk implements INodeType {
     // Build MongoDB client options
     const clientOptions: any = {};
 
+    // Handle server version compatibility
+    const serverVersion = credentials.serverVersion || "4.2+";
+    if (serverVersion === "4.0-") {
+      // For MongoDB 4.0 and older, use legacy options
+      clientOptions.useUnifiedTopology = true;
+      clientOptions.useNewUrlParser = true;
+    }
+
     // Add TLS options if enabled
     if (credentials.tls) {
       clientOptions.tls = true;

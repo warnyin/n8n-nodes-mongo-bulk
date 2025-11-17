@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.11] - 2025-11-17
+
+### Added
+- 🔧 **MongoDB 4.0 Support**: Added backward compatibility for older MongoDB versions
+  - Added "MongoDB Server Version" option in credentials to select compatibility mode
+  - Support for MongoDB 3.6, 4.0, and newer versions
+  - Automatic driver configuration based on selected server version
+
+### Changed
+- 📦 **MongoDB Driver**: Downgraded driver from v6.3.0 to v4.17.2 for broader compatibility
+  - Resolves "maximum wire version" errors with older MongoDB servers
+  - Maintains support for modern MongoDB features
+
+### Fixed
+- 🐛 **Connection Error**: Fixed "Server reports maximum wire version 7, but this version requires at least 8" error
+  - Users can now connect to MongoDB 4.0.3 and earlier versions
+  - Added legacy connection options for older servers
+
 ## [1.0.8] - 2025-10-31
 
 ### Added
