@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.12] - 2025-11-17
+
+### Fixed
+- 🐛 **BSON Dependency**: Added explicit BSON dependency to fix module loading issues in n8n
+  - Resolves "Cannot find module 'bson/lib/bson.cjs'" error
+  - Ensures proper dependency resolution in n8n's community package system
+
 ## [1.0.11] - 2025-11-17
 
 ### Added

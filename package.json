@@ -1,6 +1,6 @@
 {
   "name": "@warnyin/n8n-nodes-mongo-bulk",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "n8n node for MongoDB bulk and many operations",
   "license": "MIT",
   "author": {
@@ -56,6 +56,7 @@
     "prettier": "^2.8.8"
   },
   "dependencies": {
-    "mongodb": "^4.17.2"
+    "mongodb": "^4.17.2",
+    "bson": "^4.7.2"
   }
 }
