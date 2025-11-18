@@ -1,6 +1,6 @@
 {
   "name": "@warnyin/n8n-nodes-mongo-bulk",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "n8n node for MongoDB bulk and many operations",
   "license": "MIT",
   "author": {

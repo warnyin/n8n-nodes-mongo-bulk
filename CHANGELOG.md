@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.14] - 2025-11-18
+
+### Added
+- ⚙️ **Convert _id to ObjectId Option**: Added option to disable automatic _id to ObjectId conversion
+  - New "Convert _id to ObjectId" option in bulkWrite, updateMany, deleteMany, and find operations
+  - Enabled by default for backward compatibility
+  - Disable this option when using string IDs instead of MongoDB ObjectId format
+
+### Fixed
+- 🐛 **String ID Support**: Fixed "Argument passed in must be a string of 12 bytes or 24 hex characters" error
+  - Allows using custom string IDs (e.g., "0987768") instead of ObjectId format
+  - Prevents automatic conversion errors when _id is not in ObjectId format
+
 ## [1.0.13] - 2025-11-17
 
 ### Fixed

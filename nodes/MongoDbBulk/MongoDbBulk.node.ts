@@ -241,6 +241,13 @@ export class MongoDbBulk implements INodeType {
             description:
               "Array of filter documents for array update operations",
           },
+          {
+            displayName: "Convert _id to ObjectId",
+            name: "convertIdToObjectId",
+            type: "boolean",
+            default: true,
+            description: "Whether to automatically convert _id string fields to MongoDB ObjectId. Disable this if your collection uses string IDs instead of ObjectId.",
+          },
         ],
       },
 
@@ -287,6 +294,36 @@ export class MongoDbBulk implements INodeType {
             default: "{}",
             description: "Fields to include/exclude",
             placeholder: '{"name": 1, "email": 1}',
+          },
+          {
+            displayName: "Convert _id to ObjectId",
+            name: "convertIdToObjectId",
+            type: "boolean",
+            default: true,
+            description: "Whether to automatically convert _id string fields to MongoDB ObjectId. Disable this if your collection uses string IDs instead of ObjectId.",
+          },
+        ],
+      },
+
+      // Bulk Write Optionss
+      {
+        displayName: "Options",
+        name: "options",
+        type: "collection",
+        placeholder: "Add Option",
+        default: {},
+        displayOptions: {
+          show: {
+            operation: ["deleteMany"],
+          },
+        },
+        options: [
+          {
+            displayName: "Convert _id to ObjectId",
+            name: "convertIdToObjectId",
+            type: "boolean",
+            default: true,
+            description: "Whether to automatically convert _id string fields to MongoDB ObjectId. Disable this if your collection uses string IDs instead of ObjectId.",
           },
         ],
       },
@@ -338,6 +375,13 @@ export class MongoDbBulk implements INodeType {
             type: "boolean",
             default: true,
             description: "Whether to execute operations in order",
+          },
+          {
+            displayName: "Convert _id to ObjectId",
+            name: "convertIdToObjectId",
+            type: "boolean",
+            default: true,
+            description: "Whether to automatically convert _id string fields to MongoDB ObjectId. Disable this if your collection uses string IDs instead of ObjectId.",
           },
         ],
       },
@@ -461,6 +505,9 @@ export class MongoDbBulk implements INodeType {
                   ? JSON.parse(updateJson)
                   : updateJson;
               const options = this.getNodeParameter("options", i, {}) as any;
+              
+              // Get convertIdToObjectId option (default: true for backward compatibility)
+              const convertIdToObjectId = options.convertIdToObjectId !== false;
 
               // Parse array filters if provided
               if (
@@ -471,7 +518,7 @@ export class MongoDbBulk implements INodeType {
               }
 
               // Convert _id strings to ObjectId if needed
-              if (filter._id && typeof filter._id === "string") {
+              if (convertIdToObjectId && filter._id && typeof filter._id === "string") {
                 filter._id = new ObjectId(filter._id);
               }
 
@@ -489,9 +536,13 @@ export class MongoDbBulk implements INodeType {
                 typeof filterJson === "string"
                   ? JSON.parse(filterJson)
                   : filterJson;
+              const options = this.getNodeParameter("options", i, {}) as any;
+              
+              // Get convertIdToObjectId option (default: true for backward compatibility)
+              const convertIdToObjectId = options.convertIdToObjectId !== false;
 
               // Convert _id strings to ObjectId if needed
-              if (filter._id && typeof filter._id === "string") {
+              if (convertIdToObjectId && filter._id && typeof filter._id === "string") {
                 filter._id = new ObjectId(filter._id);
               }
 
@@ -506,9 +557,12 @@ export class MongoDbBulk implements INodeType {
                   ? JSON.parse(filterJson)
                   : filterJson;
               const options = this.getNodeParameter("options", i, {}) as any;
+              
+              // Get convertIdToObjectId option (default: true for backward compatibility)
+              const convertIdToObjectId = options.convertIdToObjectId !== false;
 
               // Convert _id strings to ObjectId if needed
-              if (filter._id && typeof filter._id === "string") {
+              if (convertIdToObjectId && filter._id && typeof filter._id === "string") {
                 filter._id = new ObjectId(filter._id);
               }
 
@@ -558,6 +612,9 @@ export class MongoDbBulk implements INodeType {
                   ? JSON.parse(operationsJson)
                   : operationsJson;
               const options = this.getNodeParameter("options", i, {}) as any;
+              
+              // Get convertIdToObjectId option (default: true for backward compatibility)
+              const convertIdToObjectId = options.convertIdToObjectId !== false;
 
               // Get date fields parameter
               const dateFieldsParam = this.getNodeParameter(
@@ -578,6 +635,7 @@ export class MongoDbBulk implements INodeType {
 
                 // Handle different operation types
                 if (
+                  convertIdToObjectId &&
                   operation.insertOne?.document?._id &&
                   typeof operation.insertOne.document._id === "string"
                 ) {
@@ -619,6 +677,7 @@ export class MongoDbBulk implements INodeType {
                 }
 
                 if (
+                  convertIdToObjectId &&
                   operation.updateOne?.filter?._id &&
                   typeof operation.updateOne.filter._id === "string"
                 ) {
@@ -627,6 +686,7 @@ export class MongoDbBulk implements INodeType {
                   );
                 }
                 if (
+                  convertIdToObjectId &&
                   operation.updateMany?.filter?._id &&
                   typeof operation.updateMany.filter._id === "string"
                 ) {
@@ -635,6 +695,7 @@ export class MongoDbBulk implements INodeType {
                   );
                 }
                 if (
+                  convertIdToObjectId &&
                   operation.deleteOne?.filter?._id &&
                   typeof operation.deleteOne.filter._id === "string"
                 ) {
@@ -643,6 +704,7 @@ export class MongoDbBulk implements INodeType {
                   );
                 }
                 if (
+                  convertIdToObjectId &&
                   operation.deleteMany?.filter?._id &&
                   typeof operation.deleteMany.filter._id === "string"
                 ) {
@@ -651,6 +713,7 @@ export class MongoDbBulk implements INodeType {
                   );
                 }
                 if (
+                  convertIdToObjectId &&
                   operation.replaceOne?.filter?._id &&
                   typeof operation.replaceOne.filter._id === "string"
                 ) {
