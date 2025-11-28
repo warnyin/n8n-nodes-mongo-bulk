@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.15] - 2025-11-29
+
+### Added
+- ⚙️ **Advanced ID Filtering**: Added support for `$in` and `$nin` operators in `_id` filters
+  - Automatically converts arrays of ID strings to ObjectIds when using `$in` or `$nin`
+  - Works with `updateMany`, `deleteMany`, `find`, and `bulkWrite` operations
+  - Respects the "Convert _id to ObjectId" option
+
 ## [1.0.14] - 2025-11-18
 
 ### Added

@@ -62,6 +62,37 @@ function convertDateFields(documents: any, dateFields: string[]): any {
   }
 }
 
+/**
+ * Helper function to convert _id fields in filters to ObjectId
+ * Handles direct string values and $in/$nin arrays
+ * @param filter - The filter object to process
+ */
+function convertFilterIds(filter: any): void {
+  if (!filter || typeof filter !== "object") {
+    return;
+  }
+
+  if (filter._id) {
+    // Handle direct string _id
+    if (typeof filter._id === "string") {
+      filter._id = new ObjectId(filter._id);
+    }
+    // Handle $in and $nin operators
+    else if (typeof filter._id === "object") {
+      if (Array.isArray(filter._id.$in)) {
+        filter._id.$in = filter._id.$in.map((id: any) =>
+          typeof id === "string" ? new ObjectId(id) : id
+        );
+      }
+      if (Array.isArray(filter._id.$nin)) {
+        filter._id.$nin = filter._id.$nin.map((id: any) =>
+          typeof id === "string" ? new ObjectId(id) : id
+        );
+      }
+    }
+  }
+}
+
 export class MongoDbBulk implements INodeType {
   description: INodeTypeDescription = {
     displayName: "MongoDB Bulk",
@@ -518,8 +549,9 @@ export class MongoDbBulk implements INodeType {
               }
 
               // Convert _id strings to ObjectId if needed
-              if (convertIdToObjectId && filter._id && typeof filter._id === "string") {
-                filter._id = new ObjectId(filter._id);
+              // Convert _id strings to ObjectId if needed
+              if (convertIdToObjectId) {
+                convertFilterIds(filter);
               }
 
               result = await mongoCollection.updateMany(
@@ -542,8 +574,9 @@ export class MongoDbBulk implements INodeType {
               const convertIdToObjectId = options.convertIdToObjectId !== false;
 
               // Convert _id strings to ObjectId if needed
-              if (convertIdToObjectId && filter._id && typeof filter._id === "string") {
-                filter._id = new ObjectId(filter._id);
+              // Convert _id strings to ObjectId if needed
+              if (convertIdToObjectId) {
+                convertFilterIds(filter);
               }
 
               result = await mongoCollection.deleteMany(filter);
@@ -562,8 +595,9 @@ export class MongoDbBulk implements INodeType {
               const convertIdToObjectId = options.convertIdToObjectId !== false;
 
               // Convert _id strings to ObjectId if needed
-              if (convertIdToObjectId && filter._id && typeof filter._id === "string") {
-                filter._id = new ObjectId(filter._id);
+              // Convert _id strings to ObjectId if needed
+              if (convertIdToObjectId) {
+                convertFilterIds(filter);
               }
 
               let cursor = mongoCollection.find(filter);
@@ -676,50 +710,22 @@ export class MongoDbBulk implements INodeType {
                   );
                 }
 
-                if (
-                  convertIdToObjectId &&
-                  operation.updateOne?.filter?._id &&
-                  typeof operation.updateOne.filter._id === "string"
-                ) {
-                  operation.updateOne.filter._id = new ObjectId(
-                    operation.updateOne.filter._id
-                  );
-                }
-                if (
-                  convertIdToObjectId &&
-                  operation.updateMany?.filter?._id &&
-                  typeof operation.updateMany.filter._id === "string"
-                ) {
-                  operation.updateMany.filter._id = new ObjectId(
-                    operation.updateMany.filter._id
-                  );
-                }
-                if (
-                  convertIdToObjectId &&
-                  operation.deleteOne?.filter?._id &&
-                  typeof operation.deleteOne.filter._id === "string"
-                ) {
-                  operation.deleteOne.filter._id = new ObjectId(
-                    operation.deleteOne.filter._id
-                  );
-                }
-                if (
-                  convertIdToObjectId &&
-                  operation.deleteMany?.filter?._id &&
-                  typeof operation.deleteMany.filter._id === "string"
-                ) {
-                  operation.deleteMany.filter._id = new ObjectId(
-                    operation.deleteMany.filter._id
-                  );
-                }
-                if (
-                  convertIdToObjectId &&
-                  operation.replaceOne?.filter?._id &&
-                  typeof operation.replaceOne.filter._id === "string"
-                ) {
-                  operation.replaceOne.filter._id = new ObjectId(
-                    operation.replaceOne.filter._id
-                  );
+                if (convertIdToObjectId) {
+                  if (operation.updateOne?.filter) {
+                    convertFilterIds(operation.updateOne.filter);
+                  }
+                  if (operation.updateMany?.filter) {
+                    convertFilterIds(operation.updateMany.filter);
+                  }
+                  if (operation.deleteOne?.filter) {
+                    convertFilterIds(operation.deleteOne.filter);
+                  }
+                  if (operation.deleteMany?.filter) {
+                    convertFilterIds(operation.deleteMany.filter);
+                  }
+                  if (operation.replaceOne?.filter) {
+                    convertFilterIds(operation.replaceOne.filter);
+                  }
                 }
 
                 return operation;
